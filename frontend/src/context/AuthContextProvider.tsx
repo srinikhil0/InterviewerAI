@@ -7,7 +7,8 @@ import {
     signOut,
     onAuthStateChanged,
     auth,
-    googleProvider
+    googleProvider,
+    sendPasswordResetEmail
 } from '../config/firebase';
 import { AuthContext } from './AuthContext';
 
@@ -40,13 +41,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await signOut(auth);
   };
 
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email);
+  };
+
   const value = {
     user,
     loading,
     signIn,
     signUp,
     signInWithGoogle,
-    logout
+    logout,
+    resetPassword
   };
 
   return (

@@ -6,6 +6,7 @@ import { getAuth,
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   User,
   Auth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -35,6 +36,7 @@ export {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail
 };
 
 export type { User, Auth };

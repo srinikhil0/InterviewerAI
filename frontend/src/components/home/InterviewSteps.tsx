@@ -1,66 +1,143 @@
 // src/components/home/InterviewSteps.tsx
-const interviewSteps = [
+import { motion } from 'framer-motion';
+import { 
+  FaFileAlt, 
+  FaPhoneAlt, 
+  FaLaptopCode, 
+  FaUsers, 
+  FaHandshake, 
+  FaChartLine 
+} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
+interface InterviewStep {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  gradient: string;
+  duration: string;
+}
+
+const interviewSteps: InterviewStep[] = [
   {
-    title: "Resume Screening",
-    description: "AI analysis of your resume to understand your background and experience.",
-    icon: "📄",
+    title: 'Resume Screening',
+    description: 'Practice optimizing your resume with AI feedback to pass the initial screening process.',
+    icon: FaFileAlt,
+    gradient: 'from-blue-500 to-cyan-500',
+    duration: '30-45 min'
   },
   {
-    title: "Initial Chat",
-    description: "Friendly conversation about your career goals and expectations.",
-    icon: "💬",
+    title: 'Phone Screen',
+    description: 'Master the initial phone interview with our AI interviewer asking common screening questions.',
+    icon: FaPhoneAlt,
+    gradient: 'from-purple-500 to-indigo-500',
+    duration: '45-60 min'
   },
   {
-    title: "Technical Assessment",
-    description: "In-depth technical discussion and problem-solving scenarios.",
-    icon: "💻",
+    title: 'Technical Round',
+    description: 'Practice technical questions, coding problems, and system design challenges.',
+    icon: FaLaptopCode,
+    gradient: 'from-green-500 to-emerald-500',
+    duration: '60-90 min'
   },
   {
-    title: "Behavioral Interview",
-    description: "Evaluation of your soft skills and cultural fit.",
-    icon: "🤝",
+    title: 'Team Fit Interview',
+    description: 'Prepare for behavioral questions and demonstrate your collaboration skills.',
+    icon: FaUsers,
+    gradient: 'from-orange-500 to-amber-500',
+    duration: '45-60 min'
   },
   {
-    title: "System Design",
-    description: "Discussion of architecture and system design principles.",
-    icon: "🏗️",
+    title: 'Final Round',
+    description: 'Practice with senior-level interviewers and handle complex scenarios.',
+    icon: FaHandshake,
+    gradient: 'from-red-500 to-pink-500',
+    duration: '60-90 min'
   },
   {
-    title: "Final Feedback",
-    description: "Comprehensive feedback and improvement suggestions.",
-    icon: "📊",
-  },
+    title: 'Performance Review',
+    description: 'Get comprehensive feedback and improvement strategies for each interview stage.',
+    icon: FaChartLine,
+    gradient: 'from-teal-500 to-cyan-500',
+    duration: '30-45 min'
+  }
 ];
 
 const InterviewSteps = () => {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Complete Interview Process
           </h2>
-          <p className="mt-4 text-xl text-gray-600">
-            Experience every stage of the interview process
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Practice every stage of the interview process with our AI interviewer
           </p>
-        </div>
+        </motion.div>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Interview Steps Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {interviewSteps.map((step, index) => (
-            <div
+            <motion.div
               key={index}
-              className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative group"
             >
-              <div className="text-4xl mb-4">{step.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-900">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-gray-600">
-                {step.description}
-              </p>
-            </div>
+              <div className="h-full p-8 rounded-2xl bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300">
+                {/* Icon */}
+                <div className={`w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-gradient-to-r ${step.gradient}`}>
+                  <step.icon className="w-6 h-6 text-white" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  {step.description}
+                </p>
+
+                {/* Duration Badge */}
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm text-gray-600">
+                  <svg className="w-4 h-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {step.duration}
+                </div>
+
+                {/* Hover Effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+              </div>
+            </motion.div>
           ))}
         </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mt-16"
+        >
+          <Link
+            to="/register"
+            className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-full text-white bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 transform transition-all duration-200 hover:scale-105"
+          >
+            Start Practicing Now
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

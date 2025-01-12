@@ -13,7 +13,7 @@ import Contact from './pages/static/Contact';
 import Careers from './pages/static/Careers';
 import Blog from './pages/static/Blog';
 import FAQ from './pages/static/FAQ';
-
+import Premium from './pages/static/Premium';
 // Legal Pages
 import Privacy from './pages/legal/Privacy';
 import Terms from './pages/legal/Terms';
@@ -30,6 +30,7 @@ import Profile from './pages/dashboard/Profile';
 import InterviewSession from './pages/interview/InterviewSession';
 import InterviewHistory from './pages/interview/InterviewHistory';
 import Settings from './pages/dashboard/Settings';
+import BlogEditor from './pages/dashboard/BlogEditor';
 
 const App = () => {
   return (
@@ -46,7 +47,8 @@ const App = () => {
             <Route path="/careers" element={<Careers />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/faq" element={<FAQ />} />
-
+            <Route path="/static/premium" element={<Premium />} />
+            
             {/* Legal Pages */}
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
@@ -97,6 +99,14 @@ const App = () => {
                   <Settings />
                 </ProtectedRoute>
               }
+            />
+            <Route 
+              path="/dashboard/blog-editor" 
+              element={
+                <ProtectedRoute allowedRoles={['admin', 'editor']}>
+                  <BlogEditor />
+                </ProtectedRoute>
+              } 
             />
           </Routes>
         </Layout>

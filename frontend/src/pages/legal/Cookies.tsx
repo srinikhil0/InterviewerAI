@@ -1,129 +1,157 @@
+import { motion } from 'framer-motion';
+import { FaCookie, FaShieldAlt, FaToggleOn, FaQuestionCircle } from 'react-icons/fa';
+
+interface Section {
+  icon: JSX.Element;
+  title: string;
+  content: string[];
+}
+
+const sections: Section[] = [
+  {
+    icon: <FaCookie className="w-6 h-6" />,
+    title: "Essential Cookies",
+    content: [
+      "Authentication and security",
+      "Session management",
+      "User preferences",
+      "Load balancing",
+      "These cookies cannot be disabled"
+    ]
+  },
+  {
+    icon: <FaShieldAlt className="w-6 h-6" />,
+    title: "Analytics Cookies",
+    content: [
+      "Understanding how you use our platform",
+      "Measuring feature effectiveness",
+      "Identifying technical issues",
+      "Improving user experience",
+      "These cookies can be disabled"
+    ]
+  },
+  {
+    icon: <FaToggleOn className="w-6 h-6" />,
+    title: "Managing Cookies",
+    content: [
+      "Control cookies through browser settings",
+      "Delete cookies from your device",
+      "Set cookie preferences on our platform",
+      "Opt-out of non-essential cookies",
+      "Note: Some features may be affected"
+    ]
+  },
+  {
+    icon: <FaQuestionCircle className="w-6 h-6" />,
+    title: "Third-Party Cookies",
+    content: [
+      "Google Analytics for usage statistics",
+      "Firebase for authentication",
+      "Payment processor cookies",
+      "Social media integration",
+      "Review third-party privacy policies"
+    ]
+  }
+];
+
 const Cookies = () => {
-  const cookieTypes = [
-    {
-      type: "Essential Cookies",
-      description: "These cookies are necessary for the website to function properly. They enable basic functions like page navigation and access to secure areas of the website.",
-      canDisable: false
-    },
-    {
-      type: "Performance Cookies",
-      description: "These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.",
-      canDisable: true
-    },
-    {
-      type: "Functional Cookies",
-      description: "These cookies enable the website to provide enhanced functionality and personalization, such as remembering your preferences and settings.",
-      canDisable: true
-    },
-    {
-      type: "Analytics Cookies",
-      description: "These cookies help us analyze how you use our website, which helps us improve our services and your interview preparation experience.",
-      canDisable: true
-    }
-  ];
-
   return (
-    <div className="bg-white py-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Cookie Policy</h1>
-        
-        <div className="prose prose-lg">
-          {/* Introduction */}
-          <section className="mb-12">
-            <p className="text-gray-600">
-              This Cookie Policy explains how InterviewerAI uses cookies and similar technologies 
-              to recognize you when you visit our website. It explains what these technologies 
-              are and why we use them, as well as your rights to control our use of them.
-            </p>
-          </section>
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-700 py-16 px-4 pt-20">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Cookie Policy
+          </h1>
+          <p className="text-xl text-white/70">
+            Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          </p>
+        </motion.div>
 
-          {/* What are cookies */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              What are Cookies?
-            </h2>
-            <p className="text-gray-600">
-              Cookies are small data files that are placed on your computer or mobile device 
-              when you visit a website. They are widely used by website owners to make their 
-              websites work, or work more efficiently, as well as to provide reporting information.
-            </p>
-          </section>
+        {/* Introduction */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white/10 backdrop-blur-lg rounded-xl p-6 mb-8"
+        >
+          <p className="text-white/70 leading-relaxed">
+            InterviewerAI uses cookies to enhance your experience on our platform. This Cookie Policy 
+            explains how we use cookies, what data they collect, and how you can control them. By 
+            using our service, you consent to our use of cookies in accordance with this policy.
+          </p>
+        </motion.div>
 
-          {/* Types of Cookies */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              Types of Cookies We Use
-            </h2>
-            <div className="space-y-6">
-              {cookieTypes.map((cookie, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {cookie.type}
-                  </h3>
-                  <p className="text-gray-600 mb-2">{cookie.description}</p>
-                  <div className="text-sm text-gray-500">
-                    {cookie.canDisable ? 
-                      "Can be disabled" : 
-                      "Cannot be disabled (necessary for website functionality)"}
-                  </div>
+        {/* Main Sections */}
+        <div className="space-y-8">
+          {sections.map((section, index) => (
+            <motion.div
+              key={section.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+              className="bg-white/10 backdrop-blur-lg rounded-xl p-6"
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 
+                              flex items-center justify-center mr-4">
+                  {section.icon}
                 </div>
-              ))}
-            </div>
-          </section>
-
-          {/* How to control cookies */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              How to Control Cookies
-            </h2>
-            <p className="text-gray-600 mb-4">
-              You can set or amend your web browser controls to accept or refuse cookies. 
-              If you choose to reject cookies, you may still use our website though your 
-              access to some functionality may be restricted.
-            </p>
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                How to manage cookies in different web browsers:
-              </h3>
-              <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                <li>Chrome: Settings → Privacy and Security → Cookies</li>
-                <li>Firefox: Options → Privacy & Security → Cookies</li>
-                <li>Safari: Preferences → Privacy → Cookies</li>
-                <li>Edge: Settings → Privacy & Security → Cookies</li>
+                <h2 className="text-2xl font-semibold text-white">
+                  {section.title}
+                </h2>
+              </div>
+              <ul className="space-y-3">
+                {section.content.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-white/70 flex items-start">
+                    <span className="text-cyan-400 mr-2">•</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
-            </div>
-          </section>
-
-          {/* Updates to policy */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              Updates to This Policy
-            </h2>
-            <p className="text-gray-600">
-              We may update this Cookie Policy from time to time to reflect changes 
-              to the cookies we use or for other operational, legal, or regulatory 
-              reasons. Please revisit this Cookie Policy regularly to stay informed 
-              about our use of cookies and related technologies.
-            </p>
-          </section>
-
-          {/* Contact Information */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              Questions?
-            </h2>
-            <p className="text-gray-600">
-              If you have any questions about our use of cookies or this Cookie Policy, 
-              please contact us at{' '}
-              <a 
-                href="mailto:privacy@interviewer-ai.com" 
-                className="text-primary-600 hover:text-primary-700"
-              >
-                privacy@interviewer-ai.com
-              </a>
-            </p>
-          </section>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Browser Instructions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="mt-8 bg-white/10 backdrop-blur-lg rounded-xl p-6"
+        >
+          <h2 className="text-2xl font-semibold text-white mb-4">
+            How to Control Cookies in Your Browser
+          </h2>
+          <div className="space-y-2 text-white/70">
+            <p>• Chrome: Settings → Privacy and Security → Cookies and other site data</p>
+            <p>• Firefox: Options → Privacy & Security → Cookies and Site Data</p>
+            <p>• Safari: Preferences → Privacy → Cookies and website data</p>
+            <p>• Edge: Settings → Cookies and site permissions → Cookies</p>
+          </div>
+        </motion.div>
+
+        {/* Contact Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-white/70 mb-4">
+            If you have any questions about our Cookie Policy, please contact us at:
+          </p>
+          <a
+            href="mailto:privacy@interviewerai.com"
+            className="text-cyan-400 hover:text-cyan-300 transition-colors"
+          >
+            privacy@interviewerai.com
+          </a>
+        </motion.div>
       </div>
     </div>
   );
