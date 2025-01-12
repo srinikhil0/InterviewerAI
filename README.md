@@ -80,4 +80,4 @@ For support, email srinikhilrg@gmail.com or open an issue in the repository.
 
 ---
 
-Made with ❤️ by [Your Name]
+Made with ❤️ by InterviewerAI Team
