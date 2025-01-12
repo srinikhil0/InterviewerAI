@@ -1,15 +1,16 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --primary: 221 83% 53%;    /* blue-600 */
+    --primary-foreground: 210 40% 98%;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-white text-gray-900 antialiased;
   }
 }
 
