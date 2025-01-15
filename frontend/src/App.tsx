@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import { AuthProvider } from './context/AuthContextProvider';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
+
 // Static Pages
 import Home from './pages/static/Home';
 import Features from './pages/static/Features';
@@ -31,6 +32,7 @@ import InterviewSession from './pages/interview/InterviewSession';
 import InterviewHistory from './pages/interview/InterviewHistory';
 import Settings from './pages/dashboard/Settings';
 import BlogEditor from './pages/dashboard/BlogEditor';
+import DreamCompanies from './pages/categories/DreamCompanies';
 
 const App = () => {
   return (
@@ -107,6 +109,14 @@ const App = () => {
                   <BlogEditor />
                 </ProtectedRoute>
               } 
+            />
+            <Route
+              path="/companies"
+              element={
+                <ProtectedRoute>
+                  <DreamCompanies />
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </Layout>
