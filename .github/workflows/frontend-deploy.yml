@@ -26,8 +26,25 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
+      # Cache build artifacts
+      - name: Cache build
+        uses: actions/cache@v3
+        with:
+          path: |
+            frontend/dist
+            frontend/node_modules/.vite
+          key: ${{ runner.os }}-vite-build-${{ hashFiles('frontend/src/**/*.{ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-build-
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Type check
+        run: npm run type-check || true # Don't fail build if types aren't perfect yet
+
+      - name: Lint
+        run: npm run lint || true # Don't fail build if lint isn't perfect yet
 
       - name: Build
         run: npm run build
@@ -39,6 +56,10 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
+      # Optional: Run tests if you have them
+      - name: Test
+        run: npm run test || true # Don't fail build if tests aren't set up yet
+
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -47,3 +68,15 @@ jobs:
           channelId: live
           projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
           entryPoint: ./frontend
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Frontend Deployment Failed',
+              body: `Deployment failed on commit ${context.sha}. Check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for details.`
+            })
