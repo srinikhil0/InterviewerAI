@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useState, useEffect } from 'react';
 import {
   BuildingOfficeIcon,
   AdjustmentsHorizontalIcon,
@@ -16,13 +15,12 @@ interface Company {
   description: string;
   roles: string[];
   difficulty: 'Easy' | 'Medium' | 'Hard';
-  matchScore: number; // Percentage match with user profile
+  matchScore: number;
   interviewCount: number;
   successRate: string;
 }
 
 const RecommendedCompanies = () => {
-  const { user } = useAuth();
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -38,7 +36,7 @@ const RecommendedCompanies = () => {
       try {
         setLoading(true);
         // Mock data - replace with actual API call
-        const response = await mockFetchCompanies(user.profile);
+        const response = await mockFetchCompanies();
         setCompanies(response);
       } catch (error) {
         console.error('Error fetching companies:', error);
@@ -48,7 +46,7 @@ const RecommendedCompanies = () => {
     };
 
     fetchRecommendedCompanies();
-  }, [user]);
+  }, []);
 
   const filteredCompanies = companies.filter(company => {
     return (
@@ -223,8 +221,8 @@ const getDifficultyStars = (difficulty: 'Easy' | 'Medium' | 'Hard'): number => {
   }
 };
 
-// Mock function to simulate API call - replace with actual API
-const mockFetchCompanies = async (userProfile: any): Promise<Company[]> => {
+// Updated mock function without requiring user profile
+const mockFetchCompanies = async (): Promise<Company[]> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 1000));
 
